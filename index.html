@@ -5,9 +5,29 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="site.css">
+
 </head>
-<body>
-	
+<body class="center">
+	<div class="container">
+		<div id="winnerBanner" class="hidden"></div>
+		<div>
+			<button id="btnPlay" class="btn btn-default">Play </button>
+			<button id="btnHit" class="btn btn-success hidden">Hit </button>
+			<button id="btnStand" class="btn btn-danger hidden">Stand </button>
+			<button id="btnPlayAgain" class="btn btn-default hidden">Play Again</button>
+		</div>
+		<div id="dealerCards" class="hidden">
+			<img id="dealerCard1" class="card" src="img/back.png" alt="">
+			<img id="dealerCard2" class="card" src="img/back.png" alt="">
+		</div>
+		<div id="playerCards" class="hidden">
+			<img id="playerCard1" class="card" src="img/back.png" alt="">
+			<img id="playerCard2" class="card" src="img/back.png" alt="">
+		</div>
+
+	</div>
+
+
 	<script src="app.js"></script>
 </body>
 </html>
