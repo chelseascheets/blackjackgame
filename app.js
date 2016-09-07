@@ -9,6 +9,142 @@
 
 	let dealer = [];
 	let player = [];
+	let dealerScore = 0;
+	let playerScore = 0;
+
+	let btnPlay = document.getElementById('btnPlay');
+	let btnHit = document.getElementById('btnHit');
+	let btnStand = document.getElementById('btnStand');
+	let btnPlayAgain = document.getElementById('btnPlayAgain');
+	let divDealerCards = document.getElementById('dealerCards');
+	let divPlayerCards = document.getElementById('playerCards');
+	let imgDealerCard1 = document.getElementById('dealerCard1');
+	let imgDealerCard2 = document.getElementById('dealerCard2');
+	let imgPlayerCard1 = document.getElementById('playerCard1');
+	let imgPlayerCard2 = document.getElementById('playerCard2');
+	let divWinner = document.getElementById('winnerBanner');
+
+
+	btnPlay.addEventListener('click', play);
+	btnHit.addEventListener('click', playerHit);
+
+	function play() {
+		
+		btnPlay.classList.add('hidden');
+		btnHit.classList.remove('hidden');
+		btnStand.classList.remove('hidden');
+		divDealerCards.classList.remove('hidden');
+		divPlayerCards.classList.remove('hidden');
+
+		deck = shuffle(deck);
+
+		dealCard(player);
+		dealCard(dealer);
+		dealCard(player);
+		dealCard(dealer);
+
+		showCard(imgPlayerCard1, player[0]);
+		showCard(imgPlayerCard2, player[1]);
+		showCard(imgDealerCard1, player[0]);
+
+		dealerScore = getHandScore(dealer);
+		playerScore = getHandScore(player);
+
+		console.log('Deck: ', deck);
+		console.log('Player: ', player);
+		console.log('Dealer: ', dealer);
+
+	}
+
+	function dealCard(hand) {
+		hand.push(deck.shift());
+	}
+
+	function showCard(img, card) {
+		img.src = 'img/' + card + '.png';
+	}
+
+	function playerHit() {
+		dealCard(player);
+		let card = player[player.length -1];
+
+		let newCardImage = document.createElement('img');
+		newCardImage.classList.add('card');
+		newCardImage.src = 'img/' + card + '.png';
+
+		divPlayerCards.appendChild(newCardImage);
+
+		playerScore = getHandScore(player);
+		
+		console.log('Score: ', playerScore);
+
+		if (playerScore > 21) {
+			showWinner();
+		}
+	}
+
+	function showWinner() {
+
+		if (playerScore > 21) {
+			divWinner.classList.add('bg-danger');
+			divWinner.classList.remove('hidden');
+			divWinner.innerHTML = '<h1>Busted! Dealer wins!</h1>';
+		}
+
+	btnHit.classList.add('hidden');
+	btnStand.classList.add('hidden');
+	btnPlayAgain.classList.remove('hidden');
+	}
+
+	function getHandScore(hand) {
+
+		let score = 0;
+
+		let nonAces = hand.filter(function (card) {
+			return card [0] !== 'A';
+		});
+
+		let aces = hand.filter(function (card) {
+			return card [0] === 'A';
+		});
+
+		nonAces.forEach(function (card) {
+			card = card.replace(/H|C|D|S/, '');
+			score += getCardScore(card, score);
+		});
+
+		aces.forEach(function (card) {
+			card = card.replace(/H|C|D|S/, '');
+			score += getCardScore(card, score);
+		});
+
+		return score;
+	}
+
+	function getCardScore(cardValue, currentScore) {
+
+			switch (cardValue) {
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+				case '10':
+					return parseInt(cardValue);
+		
+				case 'K':
+				case 'J':
+				case 'Q':
+					return 10;
+
+				case 'A':
+					return currentScore > 10 ? 1 : 11;	
+			}
+	}
+
 
 	function shuffle(array) {
 

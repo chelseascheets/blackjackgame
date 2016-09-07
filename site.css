@@ -1,0 +1,24 @@
+body {
+    margin: 20px;
+
+}
+.card {
+    display: inline-block;
+    margin: 3px;
+    width: 100px;
+}
+body { 
+              font: 16px Helvetica, Sans-Serif; 
+              line-height: 24px; 
+              background-image: url(https://www.gentingcasino.com/images/uploads/games/blackjack.jpg); 
+              background-color: #cccccc;
+              background-repeat: repeat-y;
+              background-size: 100%;
+              background-position: center;
+              }
+.center {
+    margin: auto;
+    width: 90%;
+    border: 3px solid green;
+    padding: 10px;
+}
