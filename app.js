@@ -27,6 +27,7 @@
 
 	btnPlay.addEventListener('click', play);
 	btnHit.addEventListener('click', playerHit);
+	btnStand.addEventListener('click', playerStand);
 
 	function play() {
 		
@@ -64,6 +65,17 @@
 		img.src = 'img/' + card + '.png';
 	}
 
+	function playerStand() {
+		
+		showCard(imgDealerCard2, dealer [1]);
+
+		while(dealerScore <= 16) {
+			dealerHit();
+		}
+		showWinner();
+	} 
+
+
 	function playerHit() {
 		dealCard(player);
 		let card = player[player.length -1];
@@ -83,6 +95,25 @@
 		}
 	}
 
+	function dealerHit() {
+		dealCard(dealer);
+		let card = dealer[dealer.length -1];
+
+		let newCardImage = document.createElement('img');
+		newCardImage.classList.add('card');
+		newCardImage.src = 'img/' + card + '.png';
+
+		divDealerCards.appendChild(newCardImage);
+
+		dealerScore = getHandScore(dealer);
+		
+		console.log('Score: ', dealerScore);
+
+		if (dealerScore > 21) {
+			showWinner();
+		}
+	}
+
 	function showWinner() {
 
 		if (playerScore > 21) {
@@ -90,6 +121,28 @@
 			divWinner.classList.remove('hidden');
 			divWinner.innerHTML = '<h1>Busted! Dealer wins!</h1>';
 		}
+		else if (dealerScore > 21) {
+			divWinner.classList.add('bg-success');
+			divWinner.classList.remove('hidden');
+			divWinner.innerHTML = '<h1>Dealer busted! You win!</h1>';
+		}
+		else if (playerScore > dealerScore) {
+			divWinner.classList.add('bg-success');
+			divWinner.classList.remove('hidden');
+			divWinner.innerHTML = '<h1>You win!</h1>';
+		}
+		else if(playerScore === dealerScore) {
+			divWinner.classList.add('bg-warning');
+			divWinner.classList.remove('hidden');
+			divWinner.innerHTML = '<h1>It\'s a Push...</h1>';
+		}
+		else {
+			divWinner.classList.add('bg-danger');
+			divWinner.classList.remove('hidden');
+			divWinner.innerHTML = '<h1>Dealer wins!</h1>';
+		}
+
+	showCard(imgDealerCard2, dealer [1]);
 
 	btnHit.classList.add('hidden');
 	btnStand.classList.add('hidden');
